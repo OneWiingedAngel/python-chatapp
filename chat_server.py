@@ -2,7 +2,7 @@ import os
 import socket
 import threading
 
-# Get the port from the environment variable PORT or default to 5500
+# Get the port from the environment variable PORT or default to 443
 PORT = int(os.environ.get('PORT', 443))
 HOST = '0.0.0.0'  # Listen on all network interfaces
 
@@ -25,7 +25,11 @@ def handle_client(client, username):
 # Function to broadcast message to all clients except the sender
 def broadcast(username, msg):
     for client, _ in clients:
-        client.send(f"[{username}] {msg}".encode('utf-8'))
+        try:
+            client.send(f"[{username}] {msg}".encode('utf-8'))
+        except BrokenPipeError:
+            # Handle the broken pipe error (client disconnected)
+            print(f"Client disconnected unexpectedly.")
 
 # List to store connected clients
 clients = []

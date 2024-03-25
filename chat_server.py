@@ -5,6 +5,10 @@ import threading
 PORT = int(os.environ.get('PORT', 443))
 HOST = '0.0.0.0'
 
+# Function to get the IP address of the server
+def get_server_ip():
+    return socket.gethostbyname(socket.gethostname())
+
 def handle_client(client, username):
     print(f"[NEW CONNECTION] {username} connected.")
 
@@ -33,7 +37,8 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen()
 
-print(f"[LISTENING] Server is listening on port {PORT}")
+server_ip = get_server_ip()  # Get the IP address of the server
+print(f"[LISTENING] Server is listening on {server_ip}:{PORT}")
 
 while True:
     client_socket, _ = server.accept()

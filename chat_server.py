@@ -4,7 +4,7 @@ import threading
 
 # Get the port from the environment variable PORT or default to 5500
 PORT = int(os.environ.get('PORT', 443))
-HOST = '188.123.167.134'  # Listen on all network interfaces
+HOST = '0.0.0.0'  # Listen on all network interfaces
 
 # Function to handle client connections
 def handle_client(client, username):
